@@ -1,0 +1,74 @@
+/* Lisha Naidoo */
+/* ST104048816 */
+/* Group 1 */
+
+/* References */
+/* http://udn.realityripple.com/search?q=round */
+
+/*------------------------------------------------------------------------------------------------------------------------*/
+/* Ensure no padding/margin on the body to fit navbar at the top */
+body {
+    padding-top: 70px; /* Adjust this value to match the navbar height */
+    margin: 0;
+    background-color: #b0b0b0; /* Match the gray background */
+    font-family: 'Arial', sans-serif;
+    min-height: 100vh;
+}
+
+/*------------------------------------------------------------------------------------------------------------------------*/
+/* Navbar with fixed-top behavior */
+.custom-navbar {
+    background-color: #8c8c8c;
+    padding: 20px;
+    border-radius: 0;
+    transition: background-color 0.3s ease;
+}
+
+ /*------------------------------------------------------------------------------------------------------------------------*/
+ /* Navbar hover effect */
+ .custom-navbar:hover {
+    background-color: #6e6e6e;
+ }
+
+/*------------------------------------------------------------------------------------------------------------------------*/
+/* Navbar branding with fancy font */
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    color: white;
+    text-decoration: none;
+}
+
+/*------------------------------------------------------------------------------------------------------------------------*/
+/* Adjust container to avoid overlapping with the fixed navbar */
+.container {
+    background-color: #d3d3d3;
+    border-radius: 20px;
+    padding: 50px;
+    max-width: 1000px;
+    margin-top: 120px; /* Ensure space from navbar */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/*------------------------------------------------------------------------------------------------------------------------*/
+h2 {
+    color: #333;
+}
+
+/*------------------------------------------------------------------------------------------------------------------------*/
+/* Button styling */
+.btn-outline-secondary {
+    background-color: #a29b91;
+    color: white;
+    border: none;
+    font-size: 18px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+ /*------------------------------------------------------------------------------------------------------------------------*/
+.btn-outline-secondary:hover {
+    background-color: #8c8578;
+}
+
+/*------------------------------------------...ooo000 END OF FILE 000ooo...------------------------------------------------------*/
