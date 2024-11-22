@@ -1,0 +1,153 @@
+﻿<!-- Lisha Naidoo -->
+<!-- ST10404816 -->
+<!-- Group 1 -->
+
+<!-- References -->
+<!-- https://docs.aspnetzero.com/aspnet-core-mvc -->
+
+@model Claim  
+
+<h2>Create a new claim</h2>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<!-- Display validation errors from the ModelState if any exist -->
+@if (ViewData.ModelState.ErrorCount > 0)
+{
+    <div class="alert alert-danger" role="alert">
+        <strong>Error:</strong> Please correct the errors and try again.
+        <ul>
+            <!-- Iterate over all errors in ModelState and display each error message -->
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<!-- Display any error message stored in TempData (set by the controller) -->
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <strong>Error:</strong> @TempData["ErrorMessage"]
+    </div>
+}
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<!-- Form to create a new claim -->
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- First Name input field -->
+    <div class="form-group">
+        <label asp-for="FirstName">First Name (Required)</label> 
+        <input asp-for="FirstName" class="form-control" /> 
+        <span asp-validation-for="FirstName" class="text-danger"></span> 
+    </div>
+
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- Surname input field -->
+    <div class="form-group">
+        <label asp-for="Surname">Surname (Required)</label>
+        <input asp-for="Surname" class="form-control" />
+        <span asp-validation-for="Surname" class="text-danger"></span>
+    </div>
+
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- Cell number input field -->
+    <div class="form-group">
+        <label asp-for="CellNumber">Cell Number (Required)</label>
+        <input asp-for="CellNumber" class="form-control" />
+        <span asp-validation-for="CellNumber" class="text-danger"></span>
+    </div>
+
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- Email input field -->
+    <div class="form-group">
+        <label asp-for="Email">Email (Optional)</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- Hours Worked input field (as a number) -->
+    <div class="form-group">
+        <label asp-for="HoursWorked">Hours Worked (Required)</label>
+        <input asp-for="HoursWorked" class="form-control" type="number" />
+        <span asp-validation-for="HoursWorked" class="text-danger"></span>
+    </div>
+
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- Hourly Rate input field (decimal with step of 0.01) -->
+    <div class="form-group">
+        <label asp-for="HourlyRate">Hourly Rate (Required)</label>
+        <input asp-for="HourlyRate" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="HourlyRate" class="text-danger"></span>
+    </div>
+
+    <!-- Total input field (visible but included in form submission) -->
+    <div class="form-group">
+        <label for="Total">Total: </label>
+        <input id="Total" name="Total" class="form-control" readonly value="0" /> <!-- Read-only input -->
+    </div>
+
+
+    <!-- CalculateTotal Button -->
+    <div class="form-group">
+        <button type="button" id="calculateBtn" class="btn btn-success">Calculate Total Pay</button> <!-- Calculate button -->
+    </div>
+
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- Additional Notes input field -->
+    <div class="form-group">
+        <label asp-for="AdditionalNotes">Additional Notes (Optional)</label>
+        <input asp-for="AdditionalNotes" class="form-control" />
+        <span asp-validation-for="AdditionalNotes" class="text-danger"></span>
+    </div>
+
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- File upload field (optional) -->
+    <div class="form-group">
+        <label asp-for="UploadedFilePath">Upload Supporting Document (Optional)</label>
+        <input asp-for="UploadedFilePath" type="file" class="form-control-file"
+               accept=".pdf, .docx, .xlsx" /> <!-- Limits the file types to PDF, DOCX, and XLSX -->
+        <span asp-validation-for="UploadedFilePath" class="text-danger"></span>
+    </div>
+
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- Form submission and navigation buttons -->
+    <button type="submit" class="btn btn-primary">Submit</button> <!-- Submit button -->
+    
+</form>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+@section Scripts {
+    <!-- Include validation scripts (partial view for client-side validation) -->
+    <partial name="_ValidationScriptsPartial" />
+
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            //------------------------------------------------------------------------------------------------------------------------//
+            // Define variables
+            const hoursWorkedInput = document.querySelector('[name="HoursWorked"]');
+            const hourlyRateInput = document.querySelector('[name="HourlyRate"]');
+            const totalInput = document.querySelector('[name="Total"]');
+            const calculateBtn = document.getElementById("calculateBtn");
+
+            //------------------------------------------------------------------------------------------------------------------------//
+            // Function to update the total value.
+            function updateTotal() {
+                const hoursWorked = parseFloat(hoursWorkedInput.value) || 0; // Get hours worked or default to 0.
+                const hourlyRate = parseFloat(hourlyRateInput.value) || 0;   // Get hourly rate or default to 0.
+                totalInput.value = (hoursWorked * hourlyRate).toFixed(2); // Calculate total and format to 2 decimals.
+            }
+
+            //------------------------------------------------------------------------------------------------------------------------//
+            // Add event listener to the Calculate button to trigger the calculation.
+            calculateBtn.addEventListener("click", updateTotal);
+        });
+    </script>
+
+}
+<!------------------------------------------...ooo000 END OF FILE 000ooo...-------------------------------------------------------->

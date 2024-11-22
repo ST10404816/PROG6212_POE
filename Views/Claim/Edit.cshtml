@@ -1,0 +1,164 @@
+﻿<!-- Lisha Naidoo -->
+<!-- ST10404816 -->
+<!-- Group 1 -->
+
+<!-- References -->
+<!-- https://docs.aspnetzero.com/aspnet-core-mvc -->
+
+@model IEnumerable<Claim>  
+
+<h2>Edit Claims</h2>
+
+@{
+    //------------------------------------------------------------------------------------------------------------------------//
+    // Variables to track if an error occurs and to store the error message.
+    var hasError = false;
+    var errorMessage = "";
+
+    //------------------------------------------------------------------------------------------------------------------------//
+    try
+    {
+        // Check if the model is null or contains no data.
+        // If so, throw an exception with a custom error message.
+        if (Model == null || !Model.Any())
+        {
+            throw new Exception("No data available to display.");
+        }
+    }
+    catch (Exception ex)
+    {
+        // Set the error flag and store the exception message.
+        hasError = true;
+        errorMessage = ex.Message;
+    }
+}
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<!-- Conditional rendering: Display an error message if an error occurred -->
+@if (hasError)
+{
+    <div class="alert alert-danger" role="alert">
+        <strong>Error:</strong> @errorMessage  <!-- Display the captured error message -->
+    </div>
+}
+else
+{
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- Display the claims in a table if there are no errors -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>     <!-- Table header for First Name -->
+                <th>Surname</th>        <!-- Table header for Surname -->
+                <th>Hours Worked</th>   <!-- Table header for Hours Worked -->
+                <th>Hourly Rate</th>    <!-- Table header for Hourly Rate -->
+                <th>Additional Notes</th> <!-- Header for additional notes -->
+                <th>Uploaded File</th>  <!-- Header for uploaded file links -->
+                <th>Status</th>         <!-- Header for claim status -->
+            </tr>
+        </thead>
+
+        <!---------------------------------------------------------------------------------------------------------------------------->
+        <tbody>
+            <!-- Loop through each claim in the Model and generate a table row for it -->
+            @foreach (var claim in Model)
+            {
+                <tr>
+                    <!---------------------------------------------------------------------------------------------------------------------------->
+                    <td>@claim.FirstName</td>   <!-- Display the first name -->
+                    <td>@claim.Surname</td>     <!-- Display the surname -->
+                    <td>@claim.HoursWorked</td> <!-- Display the hours worked -->
+                    <td>@claim.HourlyRate</td>  <!-- Display the hourly rate -->
+                    <td>@claim.AdditionalNotes</td> <!-- Display additional notes -->
+                    <!---------------------------------------------------------------------------------------------------------------------------->
+                    <td>
+                        <!-- Check if the claim has an uploaded file path -->
+                        @if (!string.IsNullOrEmpty(claim.UploadedFilePath))
+                        {
+                            <!-- If a file is uploaded, provide a link to view it -->
+                            <a href="@claim.UploadedFilePath" target="_blank">View File</a>
+                        }
+                        else
+                        {
+                            <!-- Display a message if no file was uploaded -->
+                            <span>No file uploaded</span>
+                        }
+                    </td>
+
+                    <!---------------------------------------------------------------------------------------------------------------------------->
+                    <td>@claim.status</td>  <!-- Display the status of the claim -->
+                    
+                    <td>
+                        <!---------------------------------------------------------------------------------------------------------------------------->
+                        <!-- Form to update the status of the claim (Approve or Decline) -->
+                        <form asp-controller="Claim" asp-action="UpdateStatus" method="post">
+                            <!-- Hidden input to pass the claim ID -->
+                            <input type="hidden" name="id" value="@claim.Id" />
+
+                            <div class="btn-group" role="group" aria-label="Claim Actions">
+                                <!---------------------------------------------------------------------------------------------------------------------------->
+                                <!-- Approve button -->
+                                <button type="submit" name="status" value="Approved"
+                                        class="btn btn-outline-success btn-sm">
+                                    <i class="bi bi-check-circle"></i> Approve
+                                </button>
+
+                                <!---------------------------------------------------------------------------------------------------------------------------->
+                                <!-- Decline button -->
+                                <button type="submit" name="status" value="Declined"
+                                        class="btn btn-outline-danger btn-sm">
+                                    <i class="bi bi-x-circle"></i> Decline
+                                </button>
+                            </div>
+                            
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h4>Automatic Claim Approval</h4>
+    </div>
+    <div class="card-body">
+        <form asp-controller="Claim" asp-action="AutoApproveClaims" method="post">
+            <div class="row mb-3">
+                <!-- Input for Minimum Hours Worked -->
+                <div class="col-md-6">
+                    <label for="minHoursWorked" class="form-label">Minimum Hours Worked</label>
+                    <input type="number" class="form-control" id="minHoursWorked" name="minHoursWorked" required>
+                </div>
+
+                <!-- Input for Maximum Hours Worked -->
+                <div class="col-md-6">
+                    <label for="maxHoursWorked" class="form-label">Maximum Hours Worked</label>
+                    <input type="number" class="form-control" id="maxHoursWorked" name="maxHoursWorked" required>
+                </div>
+
+                <!-- Input for Minimum Hourly Rate -->
+                <div class="col-md-6">
+                    <label for="minHourlyRate" class="form-label">Minimum Hourly Rate</label>
+                    <input type="number" class="form-control" id="minHourlyRate" name="minHourlyRate" required>
+                </div>
+
+                <!-- Input for Maximum Hourly Rate -->
+                <div class="col-md-6">
+                    <label for="maxHourlyRate" class="form-label">Maximum Hourly Rate</label>
+                    <input type="number" class="form-control" id="maxHourlyRate" name="maxHourlyRate" required>
+                </div>
+
+
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-gear"></i> Process Claims
+            </button>
+        </form>
+    </div>
+</div>
+
+<!------------------------------------------...ooo000 END OF FILE 000ooo...------------------------------------------------------>

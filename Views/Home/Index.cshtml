@@ -1,0 +1,67 @@
+﻿<!-- Lisha Naidoo -->
+<!-- ST10404816 -->
+<!-- Group 1 -->
+
+<!-- References -->
+<!-- https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/ -->
+<!-- https://i.pinimg.com/736x/8f/1d/2a/8f1d2aa2579d734cc46bc688b819777f.jpg -->
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    body {
+        background-image: url("https://i.pinimg.com/1200x/8f/1d/2a/8f1d2aa2579d734cc46bc688b819777f.jpg");
+        background-size: cover; /* Ensures the image covers the whole screen */
+        background-position: center; /* Centers the image */
+        background-repeat: no-repeat; /* Prevents the image from repeating */
+        height: 100vh; /* Ensures the body takes up the full height of the viewport */
+        margin: 0; /* Removes any default margin that could create white spaces */
+    }
+</style>
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<!-- Center-align content using Bootstrap's text-center class -->
+<div class="text-center">
+
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- Large welcome message with custom font and styling -->
+    <h1 style="font-family: 'Playfair Display', serif; font-size: 40px; color: black;">
+        Welcome
+    </h1>
+
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- Subtitle message with custom font and styling -->
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 25px; color: black;">
+        Please choose a view:
+    </h2>
+
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- Spacing added using Bootstrap's mt-4 class (margin-top: 4 units) -->
+    <div class="mt-4">
+        <!-- Button to navigate to the Lecturer View page -->
+        <a class="btn btn-outline-secondary mx-2 px-4 py-2" 
+           asp-area="" asp-controller="Claim" asp-action="Create"> <!-- Links to the Claim/Create action -->
+            Lecturer
+        </a>
+
+        <!---------------------------------------------------------------------------------------------------------------------------->
+        <!-- Button to navigate to the Coordinator and Manager View page -->
+        <a class="btn btn-outline-secondary mx-2 px-4 py-2" 
+           asp-area="" asp-controller="Claim" asp-action="Edit"> <!-- Links to the Claim/Edit action -->
+            Coordinator and Manager
+        </a>
+
+        <!-- Button to navigate to the HR View page -->
+        <a class="btn btn-outline-secondary mx-2 px-4 py-2"
+           asp-area="" asp-controller="Claim" asp-action="ViewClaims"> <!-- Links to the Claim/ViewClaims action -->
+            HR
+        </a>
+
+        <!---------------------------------------------------------------------------------------------------------------------------->
+
+    </div>
+</div>
+<!------------------------------------------...ooo000 END OF FILE 000ooo...------------------------------------------------------>
+
+

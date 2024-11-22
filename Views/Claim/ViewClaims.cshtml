@@ -1,0 +1,110 @@
+﻿<!-- Lisha Naidoo -->
+<!-- ST10404816 -->
+<!-- Group 1 -->
+
+<!-- References -->
+<!-- https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/ -->
+<!-- https://dotnethow.net/a-step-by-step-guide-to-configuring-entity-framework-in-your-net-web-api-project/ -->
+
+@model IEnumerable<Claim>  
+
+<h2>Claims List</h2>
+
+@{
+
+    //------------------------------------------------------------------------------------------------------------------------//
+    // Variables to track if there is an error and store the error message.
+    var hasError = false;
+    var errorMessage = "";
+
+    try
+    {
+        //------------------------------------------------------------------------------------------------------------------------//
+        // Check if the model is null or empty.
+        // If so, throw an exception with a custom error message.
+        if (Model == null || !Model.Any())
+        {
+            throw new Exception("No data available to display.");
+        }
+    }
+    catch (Exception ex)
+    {
+        // Set the error flag and store the exception message.
+        hasError = true;
+        errorMessage = ex.Message;
+    }
+}
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<!-- If an error occurred, display an alert with the error message -->
+@if (hasError)
+{
+    <div class="alert alert-danger" role="alert">
+        <strong>Error:</strong> @errorMessage  <!-- Show the error message -->
+    </div>
+}
+else
+{
+    <!---------------------------------------------------------------------------------------------------------------------------->
+    <!-- Display the claims list in a table if no errors occurred -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>      <!-- Column for First Name -->
+                <th>Surname</th>         <!-- Column for Surname -->
+                <th>Hours Worked</th>    <!-- Column for Hours Worked -->
+                <th>Hourly Rate</th>     <!-- Column for Hourly Rate -->
+                <th>Additional Notes</th> <!-- Column for Additional Notes -->
+                <th>Uploaded File</th>   <!-- Column for Uploaded File -->
+                <th>Status</th>          <!-- Column for Claim Status -->
+            </tr>
+        </thead>
+        <tbody>
+            <!---------------------------------------------------------------------------------------------------------------------------->
+            <!-- Loop through each claim in the Model and display it in a table row -->
+            @foreach (var claim in Model)
+            {
+                <tr>
+                    <td>@claim.FirstName</td>   <!-- Display the First Name -->
+                    <td>@claim.Surname</td>     <!-- Display the Surname -->
+                    <td>@claim.HoursWorked</td> <!-- Display the Hours Worked -->
+                    <td>@claim.HourlyRate</td>  <!-- Display the Hourly Rate -->
+                    <td>@claim.AdditionalNotes</td> <!-- Display Additional Notes -->
+
+                    <td>
+                        <!---------------------------------------------------------------------------------------------------------------------------->
+                        <!-- Check if the UploadedFilePath is not empty -->
+                        @if (!string.IsNullOrEmpty(claim.UploadedFilePath))
+                        {
+                            <!-- Provide a link to view the uploaded file -->
+                            <a href="@claim.UploadedFilePath" target="_blank">View File</a>
+                        }
+                        else
+                        {
+                            <!---------------------------------------------------------------------------------------------------------------------------->
+                            <!-- Display a message if no file was uploaded -->
+                            <span>No file uploaded</span>
+                        }
+                    </td>
+
+                    <td>@claim.status</td>  <!-- Display the current status of the claim -->
+
+                    <!---------------------------------------------------------------------------------------------------------------------------->
+                    <td>
+                        <!-- Link to edit the claim -->
+                        <a href="/Claim/Edit/@claim.Id" class="btn btn-primary">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<!---------------------------------------------------------------------------------------------------------------------------->
+<!-- Button to generate a report of approved claims -->
+<a href="/Claim/GenerateReport" class="btn btn-success">Generate Report</a>
+<!---------------------------------------------------------------------------------------------------------------------------->
+<!---------------------------------------------------------------------------------------------------------------------------->
+<!-- Button to add a new claim -->
+<a href="/Claim/Create" class="btn btn-primary">Add New Claim</a>
+<!------------------------------------------...ooo000 END OF FILE 000ooo...----------------------------------------------------->
